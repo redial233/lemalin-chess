@@ -1,6 +1,7 @@
 import { Chess } from './vendor/chess.js';
 import { pieceSVG } from './pieces.js';
 import { chibiSVG, backgroundSVG } from './chibi.js';
+import { lemalin, blinkFrame, drawGrid, drawBackground } from './pixel.js';
 const $ = s => document.querySelector(s);
 
 /* ---------- Stockfish 引擎（Web Worker，单线程版，不需要 SharedArrayBuffer） ---------- */
@@ -50,7 +51,15 @@ const L = {
   low: ['指挥官，时间不多了哦，快一点吧~']
 };
 const pick = a => a[Math.floor(Math.random() * a.length)];
-function say(t, mood = 'sleepy'){ $('#bubble').textContent = t; $('#avatar').innerHTML = chibiSVG(mood); }
+let mood = 'sleepy', frame = 0, tick2 = 0;
+const artPixel = () => $('#artStyle').value === 'pixel';
+function drawAvatar(){ if (!artPixel()) { $('#avatar').innerHTML = chibiSVG(mood); return; }
+  let c = $('#avatar canvas'); if (!c) { $('#avatar').innerHTML = '<canvas class="px"></canvas>'; c = $('#avatar canvas'); }
+  const blink = tick2 % 9 === 8 && mood !== 'happy' && mood !== 'yawn';
+  drawGrid(c, blink ? blinkFrame(mood) : lemalin(mood, frame), 4); }
+setInterval(() => { tick2++; frame = tick2 % 2; if (artPixel()) drawAvatar(); }, 700);
+function say(t, m = 'sleepy'){ $('#bubble').textContent = t; mood = m; drawAvatar(); }
+function drawBg(){ if (artPixel()) { $('#bgArt').innerHTML = '<canvas class="px"></canvas>'; drawBackground($('#bgArt canvas')); } else $('#bgArt').innerHTML = backgroundSVG(); }
 
 /* ---------- 音效（WebAudio 合成，无外部文件） ---------- */
 let ac; function beep(f = 520, d = .08){ if (!$('#snd').checked) return; try { ac = ac || new AudioContext(); const o = ac.createOscillator(), g = ac.createGain(); o.type = 'triangle'; o.frequency.value = f; g.gain.setValueAtTime(.12, ac.currentTime); g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + d * 3); o.connect(g).connect(ac.destination); o.start(); o.stop(ac.currentTime + d * 3); } catch (e) {} }
@@ -213,7 +222,8 @@ const lvlNames = l => l <= 3 ? '（迷糊）' : l <= 8 ? '（半睡半醒）' : 
 $('#lvl').oninput = () => $('#lvlTxt').textContent = $('#lvl').value + lvlNames(+$('#lvl').value); $('#lvl').oninput();
 $('#useElo').onchange = () => { $('#eloRow').hidden = !$('#useElo').checked; $('#lvl').disabled = $('#useElo').checked; };
 $('#elo').oninput = () => $('#eloTxt').textContent = $('#elo').value;
-document.getElementById('bgArt').innerHTML = backgroundSVG();
+$('#artStyle').onchange = () => { $('#avatar').innerHTML = ''; drawBg(); drawAvatar(); localStorage.lmArt = $('#artStyle').value; };
+if (localStorage.lmArt) $('#artStyle').value = localStorage.lmArt; drawBg();
 say('哈啊……指挥官，要下棋吗？左边选好时制和棋力，点「开始新对局」吧~'); render();
 
 /* ---------- 复盘分析 ---------- */
