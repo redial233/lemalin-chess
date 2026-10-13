@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="style.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M20 4a12 12 0 1 0 8 20A10 10 0 0 1 20 4z' fill='%23cfe8ff'/></svg>">
 </head><body>
-<div id="stars"></div>
+<div id="bgArt"></div><div id="stars"></div>
 <header><h1>🌙 恶毒的月夜棋盘 <small>Le Malin · Échecs nocturnes</small></h1></header>
 <main>
  <section id="left" class="panel">
@@ -24,7 +24,8 @@
   <button id="newGame" class="primary">✦ 开始新对局</button>
   <div class="btnrow"><button id="hint">💡 提示</button><button id="undo">↶ 悔棋</button></div>
   <div class="btnrow"><button id="flip">⇅ 翻转</button><button id="resign">🏳 认输</button></div>
-  <div id="opening"><div class="ttl">开局</div><div id="opName">—</div><div id="opBook"></div></div>
+  <div class="btnrow"><button id="reviewBtn">🔍 复盘分析</button><button id="pgnBtn">📜 PGN</button></div>
+  <div id="opening"><div class="ttl">开局</div><div id="opName">—</div><div id="opVar"></div><div id="opBook"></div></div>
  </section>
  <section id="center">
   <div class="clock" id="clockTop"><span class="who"></span><span class="t">--:--</span></div>
@@ -34,6 +35,14 @@
     <div id="promo" hidden></div></div>
   </div>
   <div class="clock" id="clockBot"><span class="who"></span><span class="t">--:--</span></div>
+  <div id="review" hidden>
+   <div class="rvhead"><span id="rvPct"></span><button id="rvExit">✕ 退出复盘</button></div>
+   <div id="rvProg"><div id="rvBar"></div></div>
+   <div id="rvGraph"></div>
+   <div class="btnrow"><button id="rvFirst">⏮</button><button id="rvPrev">◀</button><button id="rvNext">▶</button><button id="rvLast">⏭</button></div>
+   <div id="rvInfo"></div>
+   <div class="ttl">关键时刻</div><div id="rvKeys"></div>
+  </div>
  </section>
  <section id="right" class="panel">
   <div id="secretary">
@@ -46,6 +55,9 @@
   <div id="summary" hidden></div>
  </section>
 </main>
+<div id="pgnModal" hidden><div class="box"><h2>📜 PGN 导入 / 导出</h2>
+ <textarea id="pgnText" placeholder="把 PGN 粘贴到这里，点「导入并复盘」"></textarea>
+ <div class="btnrow"><button id="pgnCopy">复制当前棋谱</button><button id="pgnDl">下载 .pgn</button><button id="pgnLoad">导入并复盘</button><button id="pgnClose">关闭</button></div></div></div>
 <footer>原创 SVG 美术 · 引擎 Stockfish 16（GPLv3）· 规则 chess.js · 仅为同人练习作品</footer>
 <script type="module" src="app.js"></script>
 </body></html>
