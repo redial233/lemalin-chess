@@ -1,4 +1,4 @@
-// 原创 Q 版「恶毒」秘书：白色长发 + 丸子头 + 呆毛、蓝灰色大眼、深藏青色洋装配白领与青色蝴蝶结，抱着星月枕头。
+// 原创 Q 版「恶毒」秘书：白色长发 + 蓬松长发、蓝灰色大眼、深藏青色洋装配白领与青色蝴蝶结，抱着星月枕头。
 // 仅参考官方设定的配色/元素，全部为原创矢量绘制。
 const EYE = '#6f8fc4', EYE2 = '#3e5a94', LINE = '#3a3556';
 function eyes(m){
@@ -44,10 +44,7 @@ export function chibiSVG(m='sleepy'){
  <ellipse cx="60" cy="204" rx="11" ry="9" fill="url(#skin)" stroke="#e0c6c6"/><ellipse cx="140" cy="204" rx="11" ry="9" fill="url(#skin)" stroke="#e0c6c6"/>
  <!-- 头 -->
  <ellipse cx="100" cy="112" rx="66" ry="60" fill="url(#skin)"/>
- <!-- 丸子头 + 发带 + 呆毛 -->
- <circle cx="100" cy="40" r="20" fill="url(#hair)" stroke="#b8c2de" stroke-width="2"/>
- <path d="M80 50q20 10 40 0l-2 8q-18 7-36 0z" fill="#26305e"/><path d="M118 52l14-6-4 12zM82 52l-14-6 4 12z" fill="#26305e"/>
- <path d="M100 22q-6-16 10-18q-12 6-4 16" fill="none" stroke="#e3e8f4" stroke-width="5" stroke-linecap="round" class="ahoge"/>
+ <path d="M70 58q-10-14 4-22M120 54q12-14 26-6M96 52q2-16 14-20" stroke="#e3e8f4" stroke-width="5" fill="none" stroke-linecap="round"/>
  <!-- 刘海 -->
  <path d="M34 120c-6-48 26-72 66-72s72 24 66 72c-6-12-12-20-18-24l-4 18c-6-12-14-22-20-26l-6 22c-4-12-12-22-18-24-6 4-14 14-18 24l-6-22c-8 4-14 14-20 26l-4-18c-6 4-12 12-18 24z" fill="url(#hair)" stroke="#b8c2de" stroke-width="2"/>
  <path d="M34 120c-4 20-2 40 6 52M166 120c4 20 2 40-6 52" stroke="#d6dcee" stroke-width="10" fill="none" stroke-linecap="round"/>
@@ -70,7 +67,7 @@ export function backgroundSVG(){
    <path d="M120 -90a150 150 0 1 0 60 250 125 125 0 0 1-60-250z" fill="#dfe9ff"/>
    <!-- 月亮上睡觉的Q版小剪影 -->
    <g transform="translate(-30 120) rotate(-12)" fill="#1a2350">
-    <ellipse cx="60" cy="0" rx="40" ry="34"/><circle cx="60" cy="-38" r="12"/>
+    <ellipse cx="60" cy="0" rx="42" ry="34"/>
     <path d="M24 10q-10 40 10 50h70q20-14 0-30z"/><path d="M98 6q30 10 50 4q-8 18-40 18z"/>
    </g>
    <text x="70" y="20" fill="#8fe3ff" font-size="40" font-style="italic" font-family="serif">z</text><text x="105" y="-12" fill="#b49cff" font-size="28" font-family="serif" font-style="italic">z</text>
@@ -82,7 +79,7 @@ export function backgroundSVG(){
   <g opacity=".13" transform="translate(70 420) scale(1.4)" fill="#cfd8f2">
    <!-- 抱枕上的小剪影 -->
    <rect x="0" y="80" width="140" height="56" rx="26"/>
-   <circle cx="70" cy="40" r="42"/><circle cx="70" cy="-6" r="13"/>
+   <circle cx="70" cy="40" r="44"/>
    <path d="M28 50q-10 50-6 80M112 50q10 50 6 80" stroke="#cfd8f2" stroke-width="16" fill="none" stroke-linecap="round"/>
   </g>
   <g fill="#ffe7a3" opacity=".35"><path d="M300 120l4 9 10 1.4-7 7 1.6 10-8.6-4.6-8.6 4.6 1.6-10-7-7 10-1.4z"/><path d="M820 70l3 6 6.5 1-4.7 4.6 1.1 6.4-5.9-3-5.8 3 1.1-6.4-4.7-4.6 6.5-1z"/></g>
