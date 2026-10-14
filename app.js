@@ -119,8 +119,10 @@ function renderClocks(){ const top = flipped ? 'w' : 'b', bot = flipped ? 'b' : 
     el.querySelector('.t').textContent = fmt(clock[c]); el.classList.toggle('active', running && game.turn() === c); el.classList.toggle('low', timed && clock[c] < 20000); } }
 function renderEval(){ const cp = evals[evals.length - 1] ?? 0, c = Math.max(-1000, Math.min(1000, cp));
   const pct = 50 + 50 * (2 / (1 + Math.exp(-0.004 * c)) - 1);
-  $('#evalFill').style.height = (flipped ? 100 - pct : pct) + '%'; $('#evalFill').style.top = flipped ? '0' : ''; $('#evalFill').style.bottom = flipped ? '' : '0';
-  $('#evalTxt').textContent = Math.abs(cp) > 9000 ? '#' + (10000 - Math.abs(cp)) : (cp / 100).toFixed(1); }
+  // cp 始终是白方视角；白色部分=白方份额，靠近白方一侧（未翻转在下，翻转后在上）
+  const f = $('#evalFill'); f.style.height = pct + '%'; f.style.top = flipped ? '0' : 'auto'; f.style.bottom = flipped ? 'auto' : '0';
+  const t = Math.abs(cp) > 9000 ? (cp > 0 ? '+M' : '-M') + (10000 - Math.abs(cp)) : (cp > 0 ? '+' : '') + (cp / 100).toFixed(1);
+  $('#evalTxt').textContent = t; $('#evalBar').title = '白方视角评估 ' + t; $('#evalBar').dataset.white = pct.toFixed(1); }
 
 /* ---------- 交互 ---------- */
 $('#board').addEventListener('click', e => { const d = e.target.closest('.sq'); if (!d || view !== null || !running || game.turn() !== me) return; const s = d.dataset.sq, p = game.get(s);
@@ -301,4 +303,6 @@ $('#pgnLoad').onclick = () => { const t = new Chess(); const raw = $('#pgnText')
   $('#pgnModal').hidden = true; render(); startReview(); };
 $('#pgnClose').onclick = () => $('#pgnModal').hidden = true;
 
-window.__dbg = { get view(){ return view; }, get rv(){ return rv; }, get game(){ return game; }, get meta(){ return meta; }, get evals(){ return evals; }, clock };
+async function setFen(fen){ token++; running = false; exitReview(); game = new Chess(fen); startFen = fen; meta = []; sel = null; arrow = null;
+  const r = await analyzer.analyze(fen, { depth: 12 }); evals = [game.turn() === 'w' ? r.cp : -r.cp]; render(); return evals[0]; }
+window.__dbg = { setFen, setFlip(v){ flipped = v; render(); }, get flipped(){ return flipped; }, get view(){ return view; }, get rv(){ return rv; }, get game(){ return game; }, get meta(){ return meta; }, get evals(){ return evals; }, clock };
